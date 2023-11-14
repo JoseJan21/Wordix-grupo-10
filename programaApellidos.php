@@ -7,7 +7,12 @@ include_once("wordix.php");
 /***** DATOS DE LOS INTEGRANTES *******/
 /**************************************/
 
-/* Apellido, Nombre. Legajo. Carrera. mail. Usuario Github */
+/* Apellido, Nombre. Legajo. Carrera. mail. Usuario Github 
+Jan Moretti, Jose Ignacio. TUDW. jose.jan@est.fi.uncoma.edu.ar. josejan21
+
+
+*/
+
 /* ****COMPLETAR***** */
 
 
