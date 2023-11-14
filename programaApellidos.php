@@ -8,7 +8,7 @@ include_once("wordix.php");
 /**************************************/
 
 /* Apellido, Nombre. Legajo. Carrera. mail. Usuario Github 
-Jan Moretti, Jose Ignacio. TUDW. jose.jan@est.fi.uncoma.edu.ar. josejan21
+Jan Moretti, Jose Ignacio. FAI-4986. TUDW. jose.jan@est.fi.uncoma.edu.ar. josejan21
 
 
 */
@@ -20,6 +20,7 @@ Jan Moretti, Jose Ignacio. TUDW. jose.jan@est.fi.uncoma.edu.ar. josejan21
 /***** DEFINICION DE FUNCIONES ********/
 /**************************************/
 
+//FUNCION 1
 /**
  * Obtiene una colección de palabras
  * @return array
@@ -29,12 +30,44 @@ function cargarColeccionPalabras()
     $coleccionPalabras = [
         "MUJER", "QUESO", "FUEGO", "CASAS", "RASGO",
         "GATOS", "GOTAS", "HUEVO", "TINTO", "NAVES",
-        "VERDE", "MELON", "YUYOS", "PIANO", "PISOS"
-        /* Agregar 5 palabras más */
+        "VERDE", "MELON", "YUYOS", "PIANO", "PISOS",
+        "JAMON", "ROSAS", "VACAS", "MOVIL", "ANIME"
     ];
 
     return ($coleccionPalabras);
 }
+
+//FUNCION 2
+
+
+//FUNCION 3
+
+
+//FUNCION 4
+
+
+//FUNCION 5
+
+
+//FUNCION 6
+
+
+//FUNCION 7
+
+
+//FUNCION 8
+
+
+//FUNCION 9
+
+
+//FUNCION 10
+
+
+//FUNCION 11
+
+
+
 
 /* ****COMPLETAR***** */
 
