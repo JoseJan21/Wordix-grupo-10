@@ -90,7 +90,24 @@ function seleccionarOpcion(){
 
 
 //FUNCION 6
+/**
+ * 
+ * una funcion que muestra los datos de una partida 
+ * @param array $infoParti 
+ */
+function datosDePartida( $infoParti)
+{  
+   
+    $contador = count($infoParti);         //CONTADO DE LOS INDICES  DE infoParti
+    echo "partida".$contador  ;
 
+   foreach($infoParti as $key => $value) {
+    echo "palabra".$infoParti[0]["palabrawordix"].".";
+    echo "jugador". $infoParti[0]["jugador"] .".";
+    echo "puntaje". $infoParti[0]["puntaje"] .".";
+    echo "intentos". $infoParti[0]["intentos"] .".";
+    }
+}
 
 //FUNCION 7
 
