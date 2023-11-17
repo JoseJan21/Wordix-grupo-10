@@ -29,7 +29,7 @@ const ESTADO_LETRA_PERTENECE = "pertenece";
 /**
  * Solicita al usuario un número entre un rango de valores.
  * Si el número ingresado no es válido, vuelve a pedirlo. La función retorna un número válido.
- * @return float
+ * @return Integer
  */
 function solicitarNumeroEntre($min, $max)
 {
