@@ -135,7 +135,9 @@ function escribirMensajeBienvenida($usuario)
 
 
 /**
- * ****COMPLETAR*****
+ * Ingresando un "string" se verifica si realmente cada caracter de la palabra ingresada es un string
+ * @param string $cadena
+ * @return boolean
  */
 function esPalabra($cadena)
 {
@@ -151,7 +153,8 @@ function esPalabra($cadena)
 }
 
 /**
- *  ****COMPLETAR*****
+ * Le pide al usuario ingresar una palabra de 5 letras, y retorna la palabra
+ * @return string
  */
 function leerPalabra5Letras()
 {
