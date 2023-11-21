@@ -40,26 +40,26 @@ function cargarColeccionPalabras()
 //FUNCION 2
 
 /**
- * da informacion de las partidas que jugaron 
+ * crea un arreglo que contiene todas las partidas guardadas 
  * @return array
  */
 function cargarPartidas( )
 {  
-    $infoParti=[];
-    $infoParti[0]=["palabrawordix"=>"vacas", "jugador"=>"mari", "intentos"=> 6 , "puntaje"=> 0 ];
-    $infoParti[1]=["palabrawordix"=>"mujer", "jugador"=>"marian", "intentos"=> 4 , "puntaje"=> 12 ];
-    $infoParti[2]=["palabrawordix"=>"gatos", "jugador"=>"maria", "intentos"=> 5 , "puntaje"=> 12 ];
-    $infoParti[3]=["palabrawordix"=>"gotas", "jugador"=>"jose", "intentos"=> 2 , "puntaje"=> 15 ];
-    $infoParti[4]=["palabrawordix"=>"huevo", "jugador"=>"juan", "intentos"=> 4 , "puntaje"=> 11 ];
-    $infoParti[5]=["palabrawordix"=>"queso", "jugador"=>"manu", "intentos"=> 3 , "puntaje"=> 13 ];
-    $infoParti[6]=["palabrawordix"=>"fuego", "jugador"=>"pablo", "intentos"=> 5 , "puntaje"=> 9 ];
-    $infoParti[7]=["palabrawordix"=>"casas", "jugador"=>"santos", "intentos"=> 3 , "puntaje"=> 14 ];
-    $infoParti[8]=["palabrawordix"=>"tinto", "jugador"=>"manu", "intentos"=> 1 , "puntaje"=> 17 ];
-    $infoParti[9]=["palabrawordix"=>"piano", "jugador"=>"nisman", "intentos"=> 2 , "puntaje"=> 14 ];
-    $infoParti[10]=["palabrawordix"=>"pisos", "jugador"=>"nisman", "intentos"=> 4 , "puntaje"=> 14 ];
-    $infoParti[11]=["palabrawordix"=>"verde", "jugador"=>"marti", "intentos"=> 3 , "puntaje"=> 14 ];
+    $coleccionPartidas=[];
+    $coleccionPartidas[0]=["palabrawordix"=>"vacas", "jugador"=>"mari", "intentos"=> 6 , "puntaje"=> 0 ];
+    $coleccionPartidas[1]=["palabrawordix"=>"mujer", "jugador"=>"marian", "intentos"=> 4 , "puntaje"=> 12 ];
+    $coleccionPartidas[2]=["palabrawordix"=>"gatos", "jugador"=>"maria", "intentos"=> 5 , "puntaje"=> 12 ];
+    $coleccionPartidas[3]=["palabrawordix"=>"gotas", "jugador"=>"jose", "intentos"=> 2 , "puntaje"=> 15 ];
+    $coleccionPartidas[4]=["palabrawordix"=>"huevo", "jugador"=>"juan", "intentos"=> 4 , "puntaje"=> 11 ];
+    $coleccionPartidas[5]=["palabrawordix"=>"queso", "jugador"=>"manu", "intentos"=> 3 , "puntaje"=> 13 ];
+    $coleccionPartidas[6]=["palabrawordix"=>"fuego", "jugador"=>"pablo", "intentos"=> 5 , "puntaje"=> 9 ];
+    $coleccionPartidas[7]=["palabrawordix"=>"casas", "jugador"=>"santos", "intentos"=> 3 , "puntaje"=> 14 ];
+    $coleccionPartidas[8]=["palabrawordix"=>"tinto", "jugador"=>"manu", "intentos"=> 1 , "puntaje"=> 17 ];
+    $coleccionPartidas[9]=["palabrawordix"=>"piano", "jugador"=>"nisman", "intentos"=> 2 , "puntaje"=> 14 ];
+    $coleccionPartidas[10]=["palabrawordix"=>"pisos", "jugador"=>"nisman", "intentos"=> 4 , "puntaje"=> 14 ];
+    $coleccionPartidas[11]=["palabrawordix"=>"verde", "jugador"=>"marti", "intentos"=> 3 , "puntaje"=> 14 ];
 
-    return($infoParti);
+    return($coleccionPartidas);
 }
 
 //FUNCION 3
@@ -92,22 +92,20 @@ function seleccionarOpcion(){
 //FUNCION 6
 /**
  * 
- * una funcion que muestra los datos de una partida 
- * @param array $infoParti 
+ * una funcion que muestra los datos de la partida dado un numero 
+ * @param int $numeroSeleccionado 
  */
-function datosDePartida( $infoParti)
+function informacionPartida($numeroSeleccionado)
 {  
-   
-    $contador = count($infoParti);         //CONTADO DE LOS INDICES  DE infoParti
-    echo "partida".$contador  ;
+    $coleccionPartidas = cargarPartidas();   
 
-   foreach($infoParti as $key => $value) {
-    echo "palabra".$infoParti[0]["palabrawordix"].".";
-    echo "jugador". $infoParti[0]["jugador"] .".";
-    echo "puntaje". $infoParti[0]["puntaje"] .".";
-    echo "intentos". $infoParti[0]["intentos"] .".";
-    }
-}
+    echo "Numero de partida seleccionada: ".$numeroSeleccionado  ;
+    echo "palabra: ".$coleccionPartidas[$numeroSeleccionado]["palabrawordix"].".";
+    echo "jugador: ". $coleccionPartidas[$numeroSeleccionado]["jugador"] .".";
+    echo "puntaje: ". $coleccionPartidas[$numeroSeleccionado]["puntaje"] .".";
+    echo "intentos:  ". $coleccionPartidas[$numeroSeleccionado]["intentos"] .".";  
+    
+} 
 
 //FUNCION 7
 
@@ -140,8 +138,27 @@ function primerPartidaGanada($coleccionPartidas, $jugador){
     return $indice;
 }
 
-//FUNCION 9
 
+//funcuin 9   
+/**
+ * 
+ * una funcion que devuelve un array con el resumen de todas las partidas del jugador 
+ * @param array $coleccionPartidas 
+ * @param string $nombreDeJugador
+ * @return array
+ */
+function coleccionPartidasJugador($nombreDeJugador){
+    // Llamamos a la función para obtener el arreglo original
+    $coleccionPartidas = cargarPartidas();
+    $resumenJugador=[];
+    foreach ($coleccionPartidas as $partida) {
+        if ($partida["jugador"] == $nombreDeJugador){
+            // guardamos la partida filtrada con el nombre del jugador dentro de arreglo $resumenJugador
+            $resumenJugador[] = $partida; 
+        }
+    }
+    return $resumenJugador; 
+}
 
 //FUNCION 10
 /**
