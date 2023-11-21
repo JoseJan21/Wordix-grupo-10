@@ -9,7 +9,7 @@ include_once("wordix.php");
 
 /* Apellido, Nombre. Legajo. Carrera. mail. Usuario Github 
 Jan Moretti, Jose Ignacio. FAI-4986. TUDW. jose.jan@est.fi.uncoma.edu.ar. josejan21
-
+Merino Rodriguez, Ariadna Solange. FAI-4899. TUDW. ariadna.merino@est.fi.uncoma.edu.ar. arimerino
 
 */
 
@@ -87,7 +87,10 @@ function seleccionarOpcion(){
 }
 
 //FUNCION 4
+//Linea 156 de wordix.php
 
+//FUNCION 5
+//Linea 34
 
 //FUNCION 6
 /**
@@ -108,7 +111,18 @@ function informacionPartida($numeroSeleccionado)
 } 
 
 //FUNCION 7
-
+/**
+ * Los parametros de entrada son la colección de palabras y una palabra, y la función retorna la colección modificada al agregarse la nueva palabra.
+ * @param array $coleccionPalabras
+ * @param string $palabra
+ * @return array
+ */
+function agregarPalabra($coleccionPalabras, $palabra){
+    //Int $indice
+    $indice= count($coleccionPalabras);
+    $coleccionPalabras[$indice]= $palabra;
+    return $coleccionPalabras;
+}
 
 //FUNCION 8
 /**
@@ -187,7 +201,9 @@ function solicitarJugador(){
 }
 
 //FUNCION 11
-
+/**
+ * 
+ */
 
 
 
