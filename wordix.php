@@ -333,13 +333,65 @@ function esIntentoGanado($estructuraPalabraIntento)
 }
 
 /**
- * ****COMPLETAR***** documentación de la intefaz
+ * Realiza una serie de operaciones para calcular la cantidad de puntos ganadas por el usuario.
+ * @param array $estructuraIntentosWordix
  */
-function obtenerPuntajeWordix()  /* ****COMPLETAR***** parámetros formales necesarios */
-{
+function obtenerPuntajeWordix($estructuraIntentosWordix){
+    
+    //int $cantIntentosRealizados, $puntaje boolean $intentoGanado
+    
+    $cantIntentosRealizados = count($estructuraIntentosWordix);
+    $intentoGanado = esIntentoGanado($estructuraPalabraIntento);
 
-    /* ****COMPLETAR***** cuerpo de la función*/
-    return 0;
+    // Opción de solución 1 
+    if ($cantIntentosRealizados >= 1 && $cantIntentosRealizados <= 6 && $intentoGanado) {
+        switch ($cantIntentosRealizados) {
+            case 1:
+                $puntaje = 6;
+                break;
+            case 2:
+                $puntaje = 5;
+                break;
+            case 3:
+                $puntaje = 4;
+                break;
+            case 4:
+                $puntaje = 3;
+                break;
+            case 5:
+                $puntaje = 2;
+                break;
+            case 6:
+                $puntaje = 1;
+                break;
+            default:// Este es el caso por defecto, que se ejecuta si ninguno de los casos anteriores coincide con el valor de la expresión
+                $puntaje = 0;
+                break;
+        }
+    } else {
+        $puntaje = 0;
+    }
+    return $puntaje;
+
+    // Opción de solución 2
+    //  if ($cantIntentosRealizados >= 1 && $cantIntentosRealizados <= 6 && $intentoGanado){
+    //     if($cantIntentosRealizados == 1) {
+    //         $puntaje = 6;
+    //     }elseif($cantIntentosRealizados == 2){
+    //         $puntaje = 5;
+    //     }elseif($cantIntentosRealizados == 3){
+    //         $puntaje = 4;
+    //     }elseif($cantIntentosRealizados == 4) {
+    //         $puntaje = 3;
+    //     }elseif($cantIntentosRealizados == 5) {
+    //         $puntaje = 2;
+    //     }elseif($cantIntentosRealizados == 6) {
+    //         $puntaje = 1;
+    //     }
+    // }else{
+    //     $puntaje = 0;
+    // }
+    // return $puntaje;
 }
 
 /**
