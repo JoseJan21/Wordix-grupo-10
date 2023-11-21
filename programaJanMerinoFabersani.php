@@ -153,7 +153,7 @@ function primerPartidaGanada($coleccionPartidas, $jugador){
 }
 
 
-//funcuin 9   
+//FUNCION 9   
 /**
  * 
  * una funcion que devuelve un array con el resumen de todas las partidas del jugador 
@@ -200,10 +200,28 @@ function solicitarJugador(){
     return $nombreJugador;
 }
 
+//FUNCION COMPLEMENTARIA A LA 11
+/**
+ * Esta funcion es similar a la cmp descripta en el pdf sobre arreglos donde se utiliza la funcion predefinida uasort.
+ * @param string $a
+ * @param string $b
+ * @return 
+ */
+function compararPorNombreJugador($a, $b) {
+    return strcmp($a["jugador"], $b["jugador"]);
+}
+
 //FUNCION 11
 /**
- * 
+ *se muestra la colección de partidas ordenada por el nombre del jugador y por la palabra.
+ *@param array $coleccionPartidas
  */
+function partidasOrdenadas($coleccionPartidas){
+    $coleccionPartidas = cargarPartidas();
+    uasort($coleccionPartidas, 'compararPorNombreJugador');
+    print_r($coleccionPartidas);
+}
+
 
 
 
