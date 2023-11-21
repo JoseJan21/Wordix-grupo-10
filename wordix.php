@@ -122,7 +122,8 @@ function escribirSegunEstado($texto, $estado)
 }
 
 /**
- * ****COMPLETAR*****
+ *Esta funcion imprime en patalla el mensaje de bienvenida con el nombre de usuario guardado en la variable $usuario
+ * @param string $usuario
  */
 function escribirMensajeBienvenida($usuario)
 {
