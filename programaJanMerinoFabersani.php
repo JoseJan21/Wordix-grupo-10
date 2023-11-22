@@ -237,36 +237,66 @@ function partidasOrdenadas($coleccionPartidas){
 
 
 //Inicialización de variables:
-
+$coleccionPartidas = cargarPartidas();
+$coleccionPalabras = cargarColeccionPalabras();
 
 //Proceso:
+echo "Ingrese nombre de usuario: ";
+$nombreUsuario = trim(fgets(STDIN));
+$bienVenida = escribirMensajeBienvenida($nombreUsuario);
 
-$partida = jugarWordix("MELON", strtolower("MaJo"));
 //print_r($partida);
 //imprimirResultado($partida);
 
-
-
-/*
 do {
-    $opcion = ...;
+   
 
-    
+    $opcion = seleccionarOpcion();
+
     switch ($opcion) {
         case 1: 
-            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 1
+            // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 1
+            // Palabra elegida mediante indice
+            // $esPalabra = leerPalabra5Letras();
+            // $partida = jugarWordix($esPalabra, strtolower($nombreUsuario));
+            echo "caso 1\n";
 
             break;
         case 2: 
-            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 2
+            // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 2
+            echo "caso 2\n";
 
             break;
         case 3: 
-            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
+            // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
+            echo "caso 3\n";
 
             break;
-        
-            //...
+        case 4: 
+            // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 4
+            echo "caso 4\n";
+
+            break;
+        case 5: 
+            // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 5
+            echo "caso 5\n";
+
+            break;
+        case 6: 
+            // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 6
+            echo "caso 6\n";
+
+            break;
+        case 7: 
+            // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 7
+            echo "caso 7\n";
+
+            break;
+        case 8: 
+            // Salir del bucle
+            break;
+        default:
+            echo "Opción no válida \n";
+            break;
     }
-} while ($opcion != X);
-*/
+} while ($opcion != 8);
