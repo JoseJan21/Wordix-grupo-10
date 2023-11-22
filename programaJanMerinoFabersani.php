@@ -97,16 +97,18 @@ function seleccionarOpcion(){
  * 
  * una funcion que muestra los datos de la partida dado un numero 
  * @param int $numeroSeleccionado 
+ * @param array $coleccionPartidas
  */
-function informacionPartida($numeroSeleccionado)
+function informacionPartida($coleccionPartidas,$numeroSeleccionado)
 {  
     $coleccionPartidas = cargarPartidas();   
 
-    echo "Numero de partida seleccionada: ".$numeroSeleccionado  ;
-    echo "palabra: ".$coleccionPartidas[$numeroSeleccionado]["palabrawordix"].".";
-    echo "jugador: ". $coleccionPartidas[$numeroSeleccionado]["jugador"] .".";
-    echo "puntaje: ". $coleccionPartidas[$numeroSeleccionado]["puntaje"] .".";
-    echo "intentos:  ". $coleccionPartidas[$numeroSeleccionado]["intentos"] .".";  
+    echo "Partida WORDIX ";
+    echo $numeroSeleccionado . ": palabra ";
+    echo strtoupper($coleccionPartidas[$numeroSeleccionado]["palabrawordix"])."\n";
+    echo "Jugador: ". $coleccionPartidas[$numeroSeleccionado]["jugador"] ."\n";
+    echo "Puntaje: ". $coleccionPartidas[$numeroSeleccionado]["puntaje"] ." puntos \n";
+    echo "Intento: ". $coleccionPartidas[$numeroSeleccionado]["intentos"] . "\n";  
     
 } 
 
@@ -264,13 +266,15 @@ do {
             break;
         case 2: 
             // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 2
-            echo "caso 2\n";
+            //echo "caso 2\n"; ARI
+            
 
             break;
         case 3: 
-            // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
-            echo "caso 3\n";
-
+            //Ingresando el numero de partida se guarda y se utiliza la funcion 6 de la linea 102
+            echo "Ingrese un numero de partida: ";
+            $nroSeleccionado= trim(fgets(STDIN));
+            informacionPartida($coleccionPartidas, $nroSeleccionado);
             break;
         case 4: 
             // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 4
@@ -283,9 +287,8 @@ do {
 
             break;
         case 6: 
-            // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 6
-            echo "caso 6\n";
-
+            //Se muestran las partidas ordenadas utilizando la funcion 11 de la linea 102
+            echo partidasOrdenadas($coleccionPartidas);
             break;
         case 7: 
             // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 7
