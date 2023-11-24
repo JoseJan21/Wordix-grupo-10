@@ -290,6 +290,8 @@ do {
         case 2: 
             // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 2
             //echo "caso 2\n"; ARI
+            //$nombreUsuario, $num, $indicePalabra, $coleccionPalabras, $palabra, $palabraDisponible,
+            //
             echo "Ingrese nombre de usuario con el que desea jugar: ";
             $nombreUsuario = trim(fgets(STDIN));
             $nombreUsuario = strtolower($nombreUsuario);
@@ -298,9 +300,12 @@ do {
                 $indicePalabra= array_rand($coleccionPalabras, $num);//array_rand es una funcion predefinida de php que elige aleatoriamente un indice de la array
                 $palabra= $coleccionPalabras[$indicePalabra];
                 $palabraDisponible= palabraDisponible($palabra, $nombreUsuario);
-            }while($palabraDisponible);
+            }while(!$palabraDisponible);
             //echo $palabraDisponible . " es " . $palabra . "\n";
-            
+            $partida= jugarWordix($palabra, $nombreUsuario); //Salte error en la linea 340 del programa wordix, tenemos que arreglar la funcion de puntaje
+            $indiceNuevo= count($coleccionPartidas);
+            $coleccionPartidas[$indiceNuevo]= $partida;
+            //print_r($coleccionPartidas); prueba provicional para ver el grabado de juego
             break;
         case 3: 
             //Ingresando el numero de partida se guarda y se utiliza la funcion 6 de la linea 102
