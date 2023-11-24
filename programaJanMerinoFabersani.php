@@ -224,7 +224,30 @@ function partidasOrdenadas($coleccionPartidas){
     print_r($coleccionPartidas);
 }
 
-
+//FUNCION 12(EXTRA)
+/**
+ * Se utiliza para verificar si la palabra seleccionada para jugar ya fue utilizada por el usuario
+ * @param int $Palabra
+ * @param string $nombreUsuario
+ * @return boolean
+ */
+function palabraDisponible($palabra, $nombreUsuario){
+    $coleccionPartidas= cargarPartidas();
+    $iMax= count($coleccionPartidas);
+    $i= 0;
+    $palabraDisponible=true;
+    while($i<$iMax&&$palabraDisponible){
+        $palabrawordix=strtoupper($coleccionPartidas[$i]["palabrawordix"]);
+        if($palabrawordix==$palabra){
+            $jugador= $coleccionPartidas[$i]["jugador"];
+            if ($jugador==$nombreUsuario){
+                $palabraDisponible= false;
+            } 
+        }
+        $i++;
+    }
+    return $palabraDisponible;
+}
 
 
 /* ****COMPLETAR***** */
@@ -267,8 +290,17 @@ do {
         case 2: 
             // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 2
             //echo "caso 2\n"; ARI
+            echo "Ingrese nombre de usuario con el que desea jugar: ";
+            $nombreUsuario = trim(fgets(STDIN));
+            $nombreUsuario = strtolower($nombreUsuario);
+            $num= 1;
+            do{
+                $indicePalabra= array_rand($coleccionPalabras, $num);//array_rand es una funcion predefinida de php que elige aleatoriamente un indice de la array
+                $palabra= $coleccionPalabras[$indicePalabra];
+                $palabraDisponible= palabraDisponible($palabra, $nombreUsuario);
+            }while($palabraDisponible);
+            //echo $palabraDisponible . " es " . $palabra . "\n";
             
-
             break;
         case 3: 
             //Ingresando el numero de partida se guarda y se utiliza la funcion 6 de la linea 102
