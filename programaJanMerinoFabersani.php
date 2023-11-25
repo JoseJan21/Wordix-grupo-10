@@ -280,13 +280,49 @@ do {
 
     switch ($opcion) {
         case 1: 
-            // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 1
-            // Palabra elegida mediante indice
-            // $esPalabra = leerPalabra5Letras();
-            // $partida = jugarWordix($esPalabra, strtolower($nombreUsuario));
-            echo "caso 1\n";
-
-            break;
+             // Palabra elegida mediante indice
+             echo "Ingrese el indice de su palabra(en numeros): \n";
+           
+             $numMax = count($coleccionPalabras) - 1;
+             $indicePalabraElegida = solicitarNumeroEntre(0, $numMax);
+ 
+             $palabraElegida = $coleccionPalabras[$indicePalabraElegida];
+ 
+             $partida = jugarWordix($palabraElegida, strtolower($nombreUsuario));
+             array_push($coleccionPartidas, $partida);
+ 
+             //#####################
+             // $palabraHabilitada = " ";
+             // $palabraNoHabilitada = " ";
+             // $palabraUsada = "no encontrada"; // Inicializar palabraUsada fuera del bucle
+ 
+             // while ($indicePalabraElegida <= $iMax) { // Modificar condición en el bucle
+             //     if ($nombreUsuario != $coleccionPartidas[$indicePalabraElegida]["jugador"]) {
+             //         $indicePalabraElegida = $indicePalabraElegida + 1;
+             //         $palabraUsada = "no encontrada";
+             //         echo "\n1";
+             //     } elseif ($nombreUsuario == $coleccionPartidas[$indicePalabraElegida]["jugador"]) {
+             //         $palabraUsada = $coleccionPartidas[$indicePalabraElegida]["palabrawordix"];
+             //         $i = $i + 1;
+             //         echo "\n2";
+             //     }
+ 
+             //     if ($palabra != $palabraUsada) {
+             //         $palabraHabilitada = $palabra;
+             //         $palabraNoHabilitada = "no encontrada";
+             //         echo "\n3";
+             //     } elseif ($palabra == $palabraUsada) {
+             //         $palabraNoHabilitada = $palabra;
+             //         $palabraHabilitada = "no encontrada";
+             //         echo "\n4";
+             //     }
+             // }
+ 
+             // $palabraTrue = $palabraHabilitada != $palabraNoHabilitada;
+             // $string = $palabraTrue ? "\n" . $palabra : "\n Se jugaron todas las palabras disponibles";
+             // echo $string;
+ 
+             break;
         case 2: 
             // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 2
             //echo "caso 2\n"; ARI
@@ -329,7 +365,8 @@ do {
             break;
         case 7: 
             // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 7
-            echo "caso 7\n";
+            $nuevaPalabra = leerPalabra5Letras();
+            array_push($coleccionPalabras, $nuevaPalabra);
 
             break;
         case 8: 

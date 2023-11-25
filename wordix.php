@@ -222,7 +222,7 @@ function escribirTeclado($teclado)
 
 /**
  * Escribe en pantalla los intentos de Wordix para adivinar la palabra
- * @param array $estruturaIntentosWordix
+ * @param array $estructuraIntentosWordix
  */
 function imprimirIntentosWordix($estructuraIntentosWordix)
 {
@@ -342,7 +342,7 @@ function obtenerPuntajeWordix($estructuraIntentosWordix){
     //int $cantIntentosRealizados, $puntaje boolean $intentoGanado
     
     $cantIntentosRealizados = count($estructuraIntentosWordix);
-    $intentoGanado = esIntentoGanado($estructuraPalabraIntento);
+    $intentoGanado = esIntentoGanado($estructuraIntentosWordix[$cantIntentosRealizados - 1]);
 
     // Opción de solución 1 
     if ($cantIntentosRealizados >= 1 && $cantIntentosRealizados <= 6 && $intentoGanado) {
@@ -427,7 +427,7 @@ function jugarWordix($palabraWordix, $nombreUsuario)
 
     if ($ganoElIntento) {
         $nroIntento--;
-        $puntaje = obtenerPuntajeWordix();
+        $puntaje = obtenerPuntajeWordix($arregloDeIntentosWordix);
         echo "Adivinó la palabra Wordix en el intento " . $nroIntento . "!: " . $palabraIntento . " Obtuvo $puntaje puntos!";
     } else {
         $nroIntento = 0; //reset intento
