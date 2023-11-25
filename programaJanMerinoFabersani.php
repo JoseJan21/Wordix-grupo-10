@@ -249,6 +249,21 @@ function palabraDisponible($palabra, $nombreUsuario){
     return $palabraDisponible;
 }
 
+//FUNCION 13(EXTRA)
+/**
+ * Se utiliza para selecionar una palabra al azar disponible para jugar
+ * @return
+ */
+function palabraAleatoria(){
+    $coleccionPalabras= cargarColeccionPalabras();
+    $num= 1;
+    do{
+        $indicePalabra= array_rand($coleccionPalabras, $num);//array_rand es una funcion predefinida de php que elige aleatoriamente un indice de la array
+        $palabra= $coleccionPalabras[$indicePalabra];
+        $palabraDisponible= palabraDisponible($palabra, $nombreUsuario);
+    }while(!$palabraDisponible);
+    return $palabraDisponible;
+}
 
 /* ****COMPLETAR***** */
 
@@ -331,13 +346,7 @@ do {
             echo "Ingrese nombre de usuario con el que desea jugar: ";
             $nombreUsuario = trim(fgets(STDIN));
             $nombreUsuario = strtolower($nombreUsuario);
-            $num= 1;
-            do{
-                $indicePalabra= array_rand($coleccionPalabras, $num);//array_rand es una funcion predefinida de php que elige aleatoriamente un indice de la array
-                $palabra= $coleccionPalabras[$indicePalabra];
-                $palabraDisponible= palabraDisponible($palabra, $nombreUsuario);
-            }while(!$palabraDisponible);
-            //echo $palabraDisponible . " es " . $palabra . "\n";
+            $palabra= palabraAleatoria();
             $partida= jugarWordix($palabra, $nombreUsuario); //Salte error en la linea 340 del programa wordix, tenemos que arreglar la funcion de puntaje
             $indiceNuevo= count($coleccionPartidas);
             $coleccionPartidas[$indiceNuevo]= $partida;
