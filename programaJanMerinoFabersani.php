@@ -254,7 +254,7 @@ function palabraDisponible($palabra, $nombreUsuario){
  * Se utiliza para selecionar una palabra al azar disponible para jugar
  * @return
  */
-function palabraAleatoria(){
+function palabraAleatoria($nombreUsuario){
     $coleccionPalabras= cargarColeccionPalabras();
     $num= 1;
     do{
@@ -262,8 +262,9 @@ function palabraAleatoria(){
         $palabra= $coleccionPalabras[$indicePalabra];
         $palabraDisponible= palabraDisponible($palabra, $nombreUsuario);
     }while(!$palabraDisponible);
-    return $palabraDisponible;
+    return $palabra;
 }
+
 
 /* ****COMPLETAR***** */
 
@@ -346,7 +347,7 @@ do {
             echo "Ingrese nombre de usuario con el que desea jugar: ";
             $nombreUsuario = trim(fgets(STDIN));
             $nombreUsuario = strtolower($nombreUsuario);
-            $palabra= palabraAleatoria();
+            $palabra= palabraAleatoria($nombreUsuario);
             $partida= jugarWordix($palabra, $nombreUsuario); //Salte error en la linea 340 del programa wordix, tenemos que arreglar la funcion de puntaje
             $indiceNuevo= count($coleccionPartidas);
             $coleccionPartidas[$indiceNuevo]= $partida;
