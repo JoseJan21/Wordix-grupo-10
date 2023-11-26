@@ -71,7 +71,7 @@ function seleccionarOpcion(){
     
     //int $opcion
 
-    echo "Menú de opciones:\n";
+    echo "\nMenú de opciones:\n";
     echo "1) Jugar al wordix con una palabra elegida\n";
     echo "2) Jugar al wordix con una palabra aleatoria\n";
     echo "3) Mostrar una partida \n";
@@ -265,6 +265,18 @@ function palabraAleatoria($nombreUsuario){
     return $palabra;
 }
 
+//FUNCION 14(EXTRA)
+/**
+ * Se utiliza para selecionar el ultimo intento del arreglo $estructuraIntentosWordix(Intento ganador)($estructuraPalabraIntento =)
+ * @return
+ */
+// function palbraGanadora($estructuraIntentosWordix){
+    
+//     $ultimoIndice = count($estructuraIntentosWordix) - 1;
+//     $ultimoIntento = $ultimoIndice >= 0 ? $estructuraIntentosWordix[$ultimoIndice] : '';
+//     $estructuraPalabraIntento = strtoupper($ultimoIntento);
+//     return $estructuraPalabraIntento;
+// }
 
 /* ****COMPLETAR***** */
 
@@ -290,55 +302,21 @@ $bienVenida = escribirMensajeBienvenida($nombreUsuario);
 //imprimirResultado($partida);
 
 do {
-   
 
     $opcion = seleccionarOpcion();
 
     switch ($opcion) {
         case 1: 
              // Palabra elegida mediante indice
-             echo "Ingrese el indice de su palabra(en numeros): \n";
+            echo "Ingrese el indice de su palabra(en numeros): \n";
            
-             $numMax = count($coleccionPalabras) - 1;
-             $indicePalabraElegida = solicitarNumeroEntre(0, $numMax);
- 
-             $palabraElegida = $coleccionPalabras[$indicePalabraElegida];
- 
-             $partida = jugarWordix($palabraElegida, strtolower($nombreUsuario));
-             array_push($coleccionPartidas, $partida);
- 
-             //#####################
-             // $palabraHabilitada = " ";
-             // $palabraNoHabilitada = " ";
-             // $palabraUsada = "no encontrada"; // Inicializar palabraUsada fuera del bucle
- 
-             // while ($indicePalabraElegida <= $iMax) { // Modificar condición en el bucle
-             //     if ($nombreUsuario != $coleccionPartidas[$indicePalabraElegida]["jugador"]) {
-             //         $indicePalabraElegida = $indicePalabraElegida + 1;
-             //         $palabraUsada = "no encontrada";
-             //         echo "\n1";
-             //     } elseif ($nombreUsuario == $coleccionPartidas[$indicePalabraElegida]["jugador"]) {
-             //         $palabraUsada = $coleccionPartidas[$indicePalabraElegida]["palabrawordix"];
-             //         $i = $i + 1;
-             //         echo "\n2";
-             //     }
- 
-             //     if ($palabra != $palabraUsada) {
-             //         $palabraHabilitada = $palabra;
-             //         $palabraNoHabilitada = "no encontrada";
-             //         echo "\n3";
-             //     } elseif ($palabra == $palabraUsada) {
-             //         $palabraNoHabilitada = $palabra;
-             //         $palabraHabilitada = "no encontrada";
-             //         echo "\n4";
-             //     }
-             // }
- 
-             // $palabraTrue = $palabraHabilitada != $palabraNoHabilitada;
-             // $string = $palabraTrue ? "\n" . $palabra : "\n Se jugaron todas las palabras disponibles";
-             // echo $string;
- 
-             break;
+            $numMax = count($coleccionPalabras) - 1;
+            $indicePalabraElegida = solicitarNumeroEntre(0, $numMax);
+            $palabraElegida = $coleccionPalabras[$indicePalabraElegida];
+            $partida = jugarWordix($palabraElegida, strtolower($nombreUsuario));
+            array_push($coleccionPartidas, $partida);
+
+            break;
         case 2: 
             // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 2
             //echo "caso 2\n"; ARI
@@ -348,7 +326,7 @@ do {
             $nombreUsuario = trim(fgets(STDIN));
             $nombreUsuario = strtolower($nombreUsuario);
             $palabra= palabraAleatoria($nombreUsuario);
-            $partida= jugarWordix($palabra, $nombreUsuario); //Salte error en la linea 340 del programa wordix, tenemos que arreglar la funcion de puntaje
+            $partida= jugarWordix($palabra, $nombreUsuario);
             $indiceNuevo= count($coleccionPartidas);
             $coleccionPartidas[$indiceNuevo]= $partida;
             //print_r($coleccionPartidas); prueba provicional para ver el grabado de juego

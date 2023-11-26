@@ -333,45 +333,86 @@ function esIntentoGanado($estructuraPalabraIntento)
     return $ganado;
 }
 
-/**
- * Realiza una serie de operaciones para calcular la cantidad de puntos ganadas por el usuario.
- * @param array $estructuraIntentosWordix
- */
-function obtenerPuntajeWordix($estructuraIntentosWordix){
-    
-    //int $cantIntentosRealizados, $puntaje boolean $intentoGanado
-    
-    $cantIntentosRealizados = count($estructuraIntentosWordix);
-    $intentoGanado = esIntentoGanado($estructuraIntentosWordix[$cantIntentosRealizados - 1]);
 
-    // Opción de solución 1 
-    if ($cantIntentosRealizados >= 1 && $cantIntentosRealizados <= 6 && $intentoGanado) {
-        switch ($cantIntentosRealizados) {
-            case 1:
-                $puntaje = 6;
+/**
+ * Realiza una serie de operaciones para calcular la cantidad de puntos ganados por el usuario.
+ * @param array $estructuraIntentosWordix
+ * @param array $estructuraPalabraIntento
+ * @return int
+ */
+function obtenerPuntajeWordix($estructuraIntentosWordix) {
+
+    // int $cantIntentosRealizados, $intentoGanado, $puntaje, array $estructuraPalabraIntento, str $letra
+
+    $cantIntentosRealizados = count($estructuraIntentosWordix);
+    // $intentoGanado = esIntentoGanado(end($estructuraIntentosWordix)); // Obtener el último intento
+    $intentoGanado = $estructuraIntentosWordix[count($estructuraIntentosWordix) - 1];
+
+    $puntaje = 0;
+    
+    // Obtener la palabra del último intento
+    $estructuraPalabraIntento = array_pop($estructuraIntentosWordix);
+    // array_pop: Extrae el último elemento del final del array
+
+    // Iterar sobre las letras de la palabra
+    foreach ($estructuraPalabraIntento as $letraInfo) {
+        $letra = strtoupper($letraInfo["letra"]); // Convertir la letra a mayúsculas
+
+        // Agregar lógica para asignar puntajes a las letras
+        switch (true) {
+            case in_array($letra, ["A", "E", "I", "O", "U"]):
+                $puntaje += 1; // Vocal
                 break;
-            case 2:
-                $puntaje = 5;
+            case in_array($letra, ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M"]):
+                $puntaje += 2; // Consonante antes de M
                 break;
-            case 3:
-                $puntaje = 4;
+            case in_array($letra, ["N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"]):
+                $puntaje += 3; // Consonante después de M
                 break;
-            case 4:
-                $puntaje = 3;
-                break;
-            case 5:
-                $puntaje = 2;
-                break;
-            case 6:
-                $puntaje = 1;
-                break;
-            default:// Este es el caso por defecto, que se ejecuta si ninguno de los casos anteriores coincide con el valor de la expresión
+            default:
                 $puntaje = 0;
                 break;
         }
-    } else {
-        $puntaje = 0;
+        // Opcion 2
+        // if (in_array($letra, ["A", "E", "I", "O", "U"])) {
+        //     $puntaje += 1; // Vocal
+        // } elseif (in_array($letra, ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M"])) {
+        //     $puntaje += 2; // Consonante antes de M
+        // } elseif (in_array($letra, ["N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"])) {
+        //     $puntaje += 3; // Consonante después de M
+        // } else {
+        //     $puntaje = 0;
+        // }
+        
     }
+
+    // Agregar lógica para sumar puntos según el intento
+    if ($cantIntentosRealizados >= 1 && $cantIntentosRealizados <= 6 && $intentoGanado) {
+        switch ($cantIntentosRealizados) {
+            case 1:
+                $puntaje += 6;
+                break;
+            case 2:
+                $puntaje += 5;
+                break;
+            case 3:
+                $puntaje += 4;
+                break;
+            case 4:
+                $puntaje += 3;
+                break;
+            case 5:
+                $puntaje += 2;
+                break;
+            case 6:
+                $puntaje += 1;
+                break;
+            default:
+                $puntaje = 0;
+                break;
+        }
+    }
+
     return $puntaje;
 
     // Opción de solución 2
@@ -428,7 +469,7 @@ function jugarWordix($palabraWordix, $nombreUsuario)
     if ($ganoElIntento) {
         $nroIntento--;
         $puntaje = obtenerPuntajeWordix($arregloDeIntentosWordix);
-        echo "Adivinó la palabra Wordix en el intento " . $nroIntento . "!: " . $palabraIntento . " Obtuvo $puntaje puntos!";
+        echo "Adivinó la palabra Wordix en el intento " . $nroIntento . "!: " . $palabraIntento . " Obtuvo $puntaje puntos!\n";
     } else {
         $nroIntento = 0; //reset intento
         $puntaje = 0;
