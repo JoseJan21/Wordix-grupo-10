@@ -386,6 +386,35 @@ function estadisticasDeJugador ($coleccionPartidas,$jugador){
     echo"******************************************************************" . " \n";
 }
 
+//FUNCION 16 (EXTRA)
+/**
+ *Muestra las estaditicas del jugador en base al nombre
+ *@param array $resumenDelJugador
+ *@param string  $primeraPartidaDelJugador
+ *@param string  $nombreDelJugador
+ */
+
+function estaditicasJugador($resumenDelJugador, $primeraPartidaDelJugador, $nombreDelJugador){
+    
+        //string $nombreDelJugador array $resumenDelJugador, $primeraPartidaDelJugador
+            
+        if($primeraPartidaDelJugador>=0){
+            
+            echo"******************************************************************" . " \n";
+            echo "Partida WORDIX \n";
+            echo "Palabra:  ";
+            echo strtoupper($resumenDelJugador[0]["palabrawordix"])."\n";
+            echo "Jugador: ". $resumenDelJugador[0]["jugador"] ."\n";
+            echo "Puntaje: ". $resumenDelJugador[0]["puntaje"] ." puntos \n";
+            echo "Intento:  adivino la palabra en ". $resumenDelJugador[0]["intentos"] . " Intentos  \n";
+            echo"******************************************************************" . " \n";
+            //   echo "la infomacion ". $infomacionDeLaPartida. "\n"; 
+            ///   echo "esto:".$primeraPartidaDelJugador;
+
+        }else{
+            echo"el jugador ". $nombreDelJugador." no gano ninguna partida \n";
+        }   
+    }
 /* ****COMPLETAR***** */
 
 /**************************************/
@@ -441,38 +470,20 @@ do {
             informacionPartida($coleccionPartidas, $nroSeleccionado);
             break;
         case 4:
-            /*Caso 5 muestra las estaditicas del nombre que escribio el jugador 
-            *String: $nombreDelJugador
-            * Array: $resumenDelJugador, $primeraPartidaDelJugador
-            */
+            //Caso 5 muestra las estaditicas del nombre que escribio el jugador 
+            //string $nombreDelJugador array $resumenDelJugador, $primeraPartidaDelJugador
             echo "ingrese el nombre del jugador: ";
-            $nombreDelJugador= trim(fgets(STDIN));                                                      //se guaarda la informacion del nombre del jugador  
+            $nombreDelJugador = trim(fgets(STDIN));
+            $resumenDelJugador = resumenDePartidasDeJugador($nombreDelJugador); 
+            //llama al array resumenDePartidasDeJugador que devuelve todas las partida que jugo ese jugador 
+            
+            $primeraPartidaDelJugador = primerPartidaGanada($resumenDelJugador, $nombreDelJugador); 
+            //llama al array primerPartidaGanada que le devuelve la primera partida ganada de ese jugador
 
-            $resumenDelJugador= resumenDePartidasDeJugador($nombreDelJugador);                          //llama al array resumenDePartidasDeJugador que devuelve todas las partida que jugo ese jugador 
-            $primeraPartidaDelJugador = primerPartidaGanada($resumenDelJugador, $nombreDelJugador);     //llama al array primerPartidaGanada que le devuelve la primera partida ganada de ese jugador
-                
-            if($primeraPartidaDelJugador>=0){
-            // echo "la primera partida de: ". $nombreUsuario." es ". $primeraPartidaDelJugador."\n" ;
-               
-
-              //$resumen = $resumenDelJugador[0];
-              echo"******************************************************************" . " \n";
-              echo "Partida WORDIX \n";
-              echo "Palabra:  ";
-              echo strtoupper($resumenDelJugador[0]["palabrawordix"])."\n";
-              echo "Jugador: ". $resumenDelJugador[0]["jugador"] ."\n";
-              echo "Puntaje: ". $resumenDelJugador[0]["puntaje"] ." puntos \n";
-              echo "Intento:  adivino la palabra en ". $resumenDelJugador[0]["intentos"] . " Intentos  \n";
-              echo"******************************************************************" . " \n";
-             //   echo "la infomacion ". $infomacionDeLaPartida. "\n"; 
-             ///   echo "esto:".$primeraPartidaDelJugador;
-
-            }else{
-                echo"el jugador ". $nombreDelJugador." no gano ninguna partida \n";
-            }   
+            estaditicasJugador($resumenDelJugador, $primeraPartidaDelJugador, $nombreDelJugador);
             ///verificar si funciona el IF de la partida si jugo
 
-                break;
+            break;
         case 5: 
             /* Completar qué secuencia de pasos ejecutar si el usuario elige la opción 5
             *  String $nombreDelJugador
@@ -495,7 +506,7 @@ do {
             // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 7
             $nuevaPalabra = leerPalabra5Letras();
             array_push($coleccionPalabras, $nuevaPalabra);
-
+            // print_r($coleccionPalabras);
             break;
         case 8: 
             // Salir del bucle
