@@ -36,6 +36,8 @@ function cargarColeccionPalabras()
 
     return ($coleccionPalabras);
 }
+//Inicialización de variables:
+$coleccionPalabras = cargarColeccionPalabras();
 
 //FUNCION 2
 
@@ -61,6 +63,8 @@ function cargarPartidas( )
 
     return($coleccionPartidas);
 }
+//Inicialización de variables:
+$coleccionPartidas = cargarPartidas();
 
 //FUNCION 3
 /**
@@ -229,10 +233,10 @@ function partidasOrdenadas($coleccionPartidas){
  * Se utiliza para verificar si la palabra seleccionada para jugar ya fue utilizada por el usuario
  * @param int $Palabra
  * @param string $nombreUsuario
+ * @param array $coleccionPartidas
  * @return boolean
  */
-function palabraDisponible($palabra, $nombreUsuario){
-    $coleccionPartidas= cargarPartidas();
+function palabraDisponible($palabra, $nombreUsuario, $coleccionPartidas){
     $iMax= count($coleccionPartidas);
     $i= 0;
     $palabraDisponible=true;
@@ -249,38 +253,53 @@ function palabraDisponible($palabra, $nombreUsuario){
     return $palabraDisponible;
 }
 
-//FUNCION 13(EXTRA)
 /**
  * Se utiliza para selecionar una palabra al azar disponible para jugar
- * @return
+ * @param string $nombreUsuario
+ * @param array $coleccionPalabras
+ * @param array $coleccionPartidas
+ * @return string
  */
-function palabraAleatoria($nombreUsuario){
-    $coleccionPalabras= cargarColeccionPalabras();
-    $num= 1;
-    do{
-        $indicePalabra= array_rand($coleccionPalabras, $num);//array_rand es una funcion predefinida de php que elige aleatoriamente un indice de la array
-        $palabra= $coleccionPalabras[$indicePalabra];
-        $palabraDisponible= palabraDisponible($palabra, $nombreUsuario);
-    }while(!$palabraDisponible);
+function palabraAleatoria($nombreUsuario, $coleccionPalabras, $coleccionPartidas) {
+    do {
+        $indicePalabra = array_rand($coleccionPalabras);//array_rand es una funcion predefinida de php que elige aleatoriamente un indice de la array
+        $palabra = $coleccionPalabras[$indicePalabra];
+        $palabraDisponible = palabraDisponible($palabra, $nombreUsuario, $coleccionPartidas);
+    } while (!$palabraDisponible);
     return $palabra;
 }
 
-//FUNCION 14(EXTRA)
 /**
- * Se utiliza para selecionar el ultimo intento del arreglo $estructuraIntentosWordix(Intento ganador)($estructuraPalabraIntento =)
- * @return
+ * Función principal que maneja el caso 1 y 2
+ * @param string $nombreUsuario
+ * @param int|null $numeroPalabra 
  */
-// function palbraGanadora($estructuraIntentosWordix){
-    
-//     $ultimoIndice = count($estructuraIntentosWordix) - 1;
-//     $ultimoIntento = $ultimoIndice >= 0 ? $estructuraIntentosWordix[$ultimoIndice] : '';
-//     $estructuraPalabraIntento = strtoupper($ultimoIntento);
-//     return $estructuraPalabraIntento;
-// }
+function jugarPartida($nombreUsuario, $coleccionPalabras, $coleccionPartidas, $numeroPalabra = null) { //El parametro ($numeroPalabra) puede ser nulo o puede ser un entero.
+
+    if ($numeroPalabra === null) {
+        $palabra = palabraAleatoria($nombreUsuario, $coleccionPalabras, $coleccionPartidas);
+    } else {
+        // $numeroPalabra = $numeroPalabra;
+        $cantPalabras = count($coleccionPalabras) - 1;
+        if ($numeroPalabra < 0 || $numeroPalabra > $cantPalabras) {
+            echo "Número de palabra no válido. Debe estar entre 0 y " . $cantPalabras;
+            return;
+        }
+
+        $palabra = $coleccionPalabras[$numeroPalabra];
+        if (!palabraDisponible($palabra, $nombreUsuario, $coleccionPartidas)) {
+            echo "La palabra ya fue utilizada por el jugador. Elige otro número de palabra.";
+            return;
+        }
+    }
+
+    $partida = jugarWordix($palabra, $nombreUsuario);
+
+    echo "Partida finalizada. Datos guardados.";
+    return $partida;
+}
 
 /* ****COMPLETAR***** */
-
-
 
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
@@ -289,17 +308,11 @@ function palabraAleatoria($nombreUsuario){
 //Declaración de variables:
 
 
-//Inicialización de variables:
-$coleccionPartidas = cargarPartidas();
-$coleccionPalabras = cargarColeccionPalabras();
-
 //Proceso:
 echo "Ingrese nombre de usuario: ";
 $nombreUsuario = trim(fgets(STDIN));
 $bienVenida = escribirMensajeBienvenida($nombreUsuario);
 
-//print_r($partida);
-//imprimirResultado($partida);
 
 do {
 
@@ -307,29 +320,33 @@ do {
 
     switch ($opcion) {
         case 1: 
-             // Palabra elegida mediante indice
-            echo "Ingrese el indice de su palabra(en numeros): \n";
-           
-            $numMax = count($coleccionPalabras) - 1;
-            $indicePalabraElegida = solicitarNumeroEntre(0, $numMax);
-            $palabraElegida = $coleccionPalabras[$indicePalabraElegida];
-            $partida = jugarWordix($palabraElegida, strtolower($nombreUsuario));
-            array_push($coleccionPartidas, $partida);
+            // Caso 1: Jugar con número de palabra específico mediante indice
+            // str $nombreUsuario int $numMax, $numeroPalabra array $partida
 
-            break;
-        case 2: 
-            // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 2
-            //echo "caso 2\n"; ARI
-            //$nombreUsuario, $num, $indicePalabra, $coleccionPalabras, $palabra, $palabraDisponible,
-            //
             echo "Ingrese nombre de usuario con el que desea jugar: ";
             $nombreUsuario = trim(fgets(STDIN));
             $nombreUsuario = strtolower($nombreUsuario);
-            $palabra= palabraAleatoria($nombreUsuario);
-            $partida= jugarWordix($palabra, $nombreUsuario);
-            $indiceNuevo= count($coleccionPartidas);
-            $coleccionPartidas[$indiceNuevo]= $partida;
-            //print_r($coleccionPartidas); prueba provicional para ver el grabado de juego
+
+            echo "Ingrese el número de palabra que desea jugar: ";
+            $numMax = count($coleccionPalabras) - 1;
+            $numeroPalabra = solicitarNumeroEntre(0, $numMax);
+
+            $partida = jugarPartida($nombreUsuario, $coleccionPalabras, $coleccionPartidas, $numeroPalabra);
+            array_push($coleccionPartidas, $partida);
+            print_r($coleccionPartidas); //prueba provicional para ver el grabado de juego
+
+            break;
+        case 2: 
+            // Caso 2: Jugar con palabra aleatoria
+            // str $nombreUsuario array $partida
+
+            echo "Ingrese nombre de usuario con el que desea jugar: ";
+            $nombreUsuario = trim(fgets(STDIN));
+            $nombreUsuario = strtolower($nombreUsuario);
+            $partida = jugarPartida($nombreUsuario, $coleccionPalabras, $coleccionPartidas, );
+            array_push($coleccionPartidas, $partida);
+            print_r($coleccionPartidas); //prueba provicional para ver el grabado de juego
+
             break;
         case 3: 
             //Ingresando el numero de partida se guarda y se utiliza la funcion 6 de la linea 102
