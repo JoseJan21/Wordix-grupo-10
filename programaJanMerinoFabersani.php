@@ -60,7 +60,7 @@ function cargarPartidas( )
     $coleccionPartidas[9]=["palabrawordix"=>"piano", "jugador"=>"nisman", "intentos"=> 2 , "puntaje"=> 14 ];
     $coleccionPartidas[10]=["palabrawordix"=>"pisos", "jugador"=>"nisman", "intentos"=> 4 , "puntaje"=> 14 ];
     $coleccionPartidas[11]=["palabrawordix"=>"verde", "jugador"=>"marti", "intentos"=> 3 , "puntaje"=> 14 ];
-
+    $coleccionPartidas[12]=["palabrawordix"=>"vacas", "jugador"=>"nisman", "intentos"=> 6 , "puntaje"=> 0 ];
     return($coleccionPartidas);
 }
 //Inicialización de variables:
@@ -103,8 +103,9 @@ function seleccionarOpcion(){
  * @param int $numeroSeleccionado 
  * @param array $coleccionPartidas
  */
-function informacionPartida($coleccionPartidas,$numeroSeleccionado)
-{  
+function informacionPartida($coleccionPartidas,$numeroSeleccionado){
+    //Array $coleccionPartidas
+
     $coleccionPartidas = cargarPartidas();   
 
     echo "Partida WORDIX ";
@@ -163,12 +164,14 @@ function primerPartidaGanada($coleccionPartidas, $jugador){
 /**
  * 
  * una funcion que devuelve un array con el resumen de todas las partidas del jugador 
- * @param array $coleccionPartidas 
+
  * @param string $nombreDeJugador
  * @return array
  */
-function coleccionPartidasJugador($nombreDeJugador){
+///cambio el nombre de la funcion 
+function resumenDePartidasDeJugador($nombreDeJugador){
     // Llamamos a la función para obtener el arreglo original
+    //  Array $coleccionPartidas, $resumenJugador
     $coleccionPartidas = cargarPartidas();
     $resumenJugador=[];
     foreach ($coleccionPartidas as $partida) {
@@ -314,6 +317,93 @@ $nombreUsuario = trim(fgets(STDIN));
 $bienVenida = escribirMensajeBienvenida($nombreUsuario);
 
 
+
+/**
+ *se muestra la colección de partidas ordenada por el nombre del jugador y por la palabra.
+ *@param array $coleccionPartidas
+ *@param string $jugador    
+ *
+ *
+
+ */
+//*@param string $puntajes 
+function estadisticasDeJugador ($coleccionPartidas,$jugador){
+// int $victoriasTotales, $partidasTotales, $puntajesTotales, $intento1, $intento2, $intento3, $intento14, $intento5, $intento6
+//array $coleccionPartidas
+    $victoriasTotales = 0;
+    $partidasTotales = 0;
+    $puntajesTotales = 0;
+    $intento1 = 0;
+    $intento2 = 0;
+    $intento3 = 0;
+    $intento4 = 0;
+    $intento5 = 0;
+    $intento6 = 0;
+
+    $coleccionPartidas = cargarPartidas();
+
+    foreach($coleccionPartidas as $partida){
+
+        if($partida["jugador"] == $jugador){
+
+            $nombreJugador= $jugador;
+            $partidasTotales = $partidasTotales + 1;
+            $puntajesTotales = $puntajesTotales + $partida["puntaje"];
+            if($partida["puntaje"] > 0){ 
+                $victoriasTotales += 1;
+            }else{
+                $victoriasTotales += 0;
+            }
+            if($partida["intentos"] == 1){
+
+                $intento1 +=1;
+            }elseif($partida["intentos"] == 2){
+
+                $intento2 += 1;
+            }elseif($partida["intentos"] == 3){
+
+                $intento3 += 1;
+            }elseif($partida["intentos"] == 4){
+
+                $intento4 += 1;
+            }elseif($partida["intentos"] == 5){
+               
+                $intento5 += 1;
+            }elseif($partida["intentos"] == 6){
+
+                $intento6 += 1;
+            }    
+        }
+        
+       
+    }
+    if ($partidasTotales > 0) {
+        $porcentajeVictorias = ($victoriasTotales / $partidasTotales) * 100;
+    
+    } else {
+        $porcentajeVictorias = 0;
+    }
+    echo"******************************************************************" . " \n";
+    echo "Nombre: " . $nombreJugador . " \n";
+    echo "Partida: " . $partidasTotales . " \n";
+    echo "Puntaje: " . $puntajesTotales . " \n";
+    echo "Victorias: " . $victoriasTotales . " \n";
+    echo "El prosentaje de victorias: ". $porcentajeVictorias ."% \n";
+   
+    echo "Adivinadas" . " \n";
+
+    echo "Intentos1: ". $intento1 . " \n";
+    echo "Intentos2: ". $intento2 . " \n";
+    echo "Intentos3: ". $intento3 . " \n";
+    echo "Intentos4: ". $intento4 . " \n";
+    echo "Intentos5: ". $intento5 . " \n";
+    echo "Intentos6: ". $intento6 . " \n";
+
+    echo"******************************************************************" . " \n";
+}
+
+
+
 do {
 
     $opcion = seleccionarOpcion();
@@ -354,14 +444,51 @@ do {
             $nroSeleccionado= trim(fgets(STDIN));
             informacionPartida($coleccionPartidas, $nroSeleccionado);
             break;
-        case 4: 
-            // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 4
-            echo "caso 4\n";
+        case 4:
+            /*Caso 5 muestra las estaditicas del nombre que escribio el jugador 
+            *String: $nombreDelJugador
+            * Array: $resumenDelJugador, $primeraPartidaDelJugador
+            */
+            echo "ingrese el nombre del jugador: ";
+            $nombreDelJugador= trim(fgets(STDIN));                                                      //se guaarda la informacion del nombre del jugador  
 
-            break;
+            $resumenDelJugador= resumenDePartidasDeJugador($nombreDelJugador);                          //llama al array resumenDePartidasDeJugador que devuelve todas las partida que jugo ese jugador 
+            $primeraPartidaDelJugador = primerPartidaGanada($resumenDelJugador, $nombreDelJugador);     //llama al array primerPartidaGanada que le devuelve la primera partida ganada de ese jugador
+                
+            if($primeraPartidaDelJugador>=0){
+            // echo "la primera partida de: ". $nombreUsuario." es ". $primeraPartidaDelJugador."\n" ;
+               
+
+              //$resumen = $resumenDelJugador[0];
+              echo"******************************************************************" . " \n";
+              echo "Partida WORDIX \n";
+              echo "Palabra:  ";
+              echo strtoupper($resumenDelJugador[0]["palabrawordix"])."\n";
+              echo "Jugador: ". $resumenDelJugador[0]["jugador"] ."\n";
+              echo "Puntaje: ". $resumenDelJugador[0]["puntaje"] ." puntos \n";
+              echo "Intento:  adivino la palabra en ". $resumenDelJugador[0]["intentos"] . " Intentos  \n";
+              echo"******************************************************************" . " \n";
+             //   echo "la infomacion ". $infomacionDeLaPartida. "\n"; 
+             ///   echo "esto:".$primeraPartidaDelJugador;
+
+            }else{
+                echo"el jugador ". $nombreDelJugador." no gano ninguna partida \n";
+            }   
+            ///verificar si funciona el IF de la partida si jugo
+
+                break;
         case 5: 
-            // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 5
-            echo "caso 5\n";
+            /* Completar qué secuencia de pasos ejecutar si el usuario elige la opción 5
+            *  String $nombreDelJugador
+            *  Array  $coleccionPartidas, $estadistica
+            */
+            echo "\n";
+            echo "ingrese el nombre del jugador: ";
+            $nombreDelJugador= trim(fgets(STDIN));                                      //se guaarda la informacion del nombre del jugador  
+            $coleccionPartidas= cargarPartidas();                                       //llama al array cargarPartidas que tiene todas las partidas guardadas 
+            $estadistica= estadisticasDeJugador($coleccionPartidas, $nombreDelJugador); //llama al array estadisticasDeJugador que ordenan las partidas por el nombre del jugador y por la palabra
+            
+            //print_r($estadistica);
 
             break;
         case 6: 
