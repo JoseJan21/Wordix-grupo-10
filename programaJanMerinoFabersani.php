@@ -105,11 +105,12 @@ function seleccionarOpcion(){
  */
 function informacionPartida($coleccionPartidas,$numeroSeleccionado){
     //Array $coleccionPartidas
-  
+
+    $coleccionPartidas = cargarPartidas();   
 
     echo "Partida WORDIX ";
     echo $numeroSeleccionado . ": palabra ";
-    echo $coleccionPartidas[$numeroSeleccionado]["palabraWordix"] ."\n";
+    echo strtoupper($coleccionPartidas[$numeroSeleccionado]["palabrawordix"])."\n";
     echo "Jugador: ". $coleccionPartidas[$numeroSeleccionado]["jugador"] ."\n";
     echo "Puntaje: ". $coleccionPartidas[$numeroSeleccionado]["puntaje"] ." puntos \n";
     echo "Intento: ". $coleccionPartidas[$numeroSeleccionado]["intentos"] . "\n";  
