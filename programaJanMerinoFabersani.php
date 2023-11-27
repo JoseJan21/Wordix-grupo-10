@@ -384,10 +384,10 @@ function estadisticasDeJugador ($coleccionPartidas,$jugador){
  *Muestra las estaditicas del jugador en base al nombre
  *@param array $resumenDelJugador
  *@param string  $primeraPartidaDelJugador
- *@param string  $nombreDelJugador
+ *@param string  $nombreUsuario
  */
-function estaditicasJugador($resumenDelJugador, $primeraPartidaDelJugador, $nombreDelJugador){
-        //string $nombreDelJugador array $resumenDelJugador, $primeraPartidaDelJugador
+function estaditicasJugador($resumenDelJugador, $primeraPartidaDelJugador, $nombreUsuario){
+        //string $nombreUsuario array $resumenDelJugador, $primeraPartidaDelJugador
             
         if($primeraPartidaDelJugador>=0){
             echo"******************************************************************" . " \n";
@@ -401,7 +401,7 @@ function estaditicasJugador($resumenDelJugador, $primeraPartidaDelJugador, $nomb
             //   echo "la infomacion ". $infomacionDeLaPartida. "\n"; 
             ///   echo "esto:".$primeraPartidaDelJugador;
         }else{
-            echo"el jugador ". $nombreDelJugador." no gano ninguna partida \n";
+            echo"el jugador ". $nombreUsuario." no gano ninguna partida \n";
         }   
     }
 
@@ -413,7 +413,14 @@ function estaditicasJugador($resumenDelJugador, $primeraPartidaDelJugador, $nomb
 y en wordix.php a traves de la funcion predefinida switch*/
 
 //Declaración de variables:
+/*String $nombreUsuario, $bienVenida, $nuevaPalabra,
+Int $opcion, $numMax, $numeroPalabra, $nroSeleccionado, 
+array $partida, $resumenDelJugador, $primeraPartidaDelJugador, $coleccionPartidas, $estadistica
+*/
 
+//Inicializacion de variables:
+$coleccionPalabras= cargarColeccionPalabras();
+$coleccionPartidas= cargarPartidas();
 
 //Proceso:
 echo "Ingrese nombre de usuario: ";
@@ -458,30 +465,30 @@ do {
             break;
         case 4:
             //Caso 5 muestra las estaditicas del nombre que escribio el jugador 
-            //string $nombreDelJugador array $resumenDelJugador, $primeraPartidaDelJugador
+            //string $nombreUsuario array $resumenDelJugador, $primeraPartidaDelJugador
             echo "ingrese el nombre del jugador: ";
-            $nombreDelJugador = trim(fgets(STDIN));
-            $resumenDelJugador = resumenDePartidasDeJugador($nombreDelJugador); 
+            $nombreUsuario = trim(fgets(STDIN));
+            $resumenDelJugador = resumenDePartidasDeJugador($nombreUsuario); 
             //llama al array resumenDePartidasDeJugador que devuelve todas las partida que jugo ese jugador 
             
-            $primeraPartidaDelJugador = primerPartidaGanada($resumenDelJugador, $nombreDelJugador); 
+            $primeraPartidaDelJugador = primerPartidaGanada($resumenDelJugador, $nombreUsuario); 
             //llama al array primerPartidaGanada que le devuelve la primera partida ganada de ese jugador
 
-            estaditicasJugador($resumenDelJugador, $primeraPartidaDelJugador, $nombreDelJugador);
+            estaditicasJugador($resumenDelJugador, $primeraPartidaDelJugador, $nombreUsuario);
             ///verificar si funciona el IF de la partida si jugo
             break;
         case 5: 
             /* Completar qué secuencia de pasos ejecutar si el usuario elige la opción 5
-            *  String $nombreDelJugador
+            *  String $nombreUsuario
             *  Array  $coleccionPartidas, $estadistica
             */
             echo "\n";
             echo "ingrese el nombre del jugador: ";
-            $nombreDelJugador= trim(fgets(STDIN));                                      
+            $nombreUsuario= trim(fgets(STDIN));                                      
             //se guarda la informacion del nombre del jugador  
             $coleccionPartidas= cargarPartidas();                                       
             //llama al array cargarPartidas que tiene todas las partidas guardadas 
-            $estadistica= estadisticasDeJugador($coleccionPartidas, $nombreDelJugador); 
+            $estadistica= estadisticasDeJugador($coleccionPartidas, $nombreUsuario); 
             //llama al array estadisticasDeJugador que ordenan las partidas por el nombre del jugador y por la palabra
             
             //print_r($estadistica);
