@@ -256,6 +256,7 @@ function palabraDisponible($palabra, $nombreUsuario, $coleccionPartidas){
     return $palabraDisponible;
 }
 
+//FUNCION 13 (EXTRA)
 /**
  * Se utiliza para selecionar una palabra al azar disponible para jugar
  * @param string $nombreUsuario
@@ -272,8 +273,9 @@ function palabraAleatoria($nombreUsuario, $coleccionPalabras, $coleccionPartidas
     return $palabra;
 }
 
+//FUNCION 14 (EXTRA)
 /**
- * Función principal que maneja el caso 1 y 2
+ * Función principal que maneja el caso 1 y 2, 
  * @param string $nombreUsuario
  * @param int|null $numeroPalabra 
  */
@@ -302,29 +304,11 @@ function jugarPartida($nombreUsuario, $coleccionPalabras, $coleccionPartidas, $n
     return $partida;
 }
 
-/* ****COMPLETAR***** */
-
-/**************************************/
-/*********** PROGRAMA PRINCIPAL *******/
-/**************************************/
-
-//Declaración de variables:
-
-
-//Proceso:
-echo "Ingrese nombre de usuario: ";
-$nombreUsuario = trim(fgets(STDIN));
-$bienVenida = escribirMensajeBienvenida($nombreUsuario);
-
-
-
+//FUNCION 15 (EXTRA)
 /**
  *se muestra la colección de partidas ordenada por el nombre del jugador y por la palabra.
  *@param array $coleccionPartidas
  *@param string $jugador    
- *
- *
-
  */
 //*@param string $puntajes 
 function estadisticasDeJugador ($coleccionPartidas,$jugador){
@@ -402,7 +386,19 @@ function estadisticasDeJugador ($coleccionPartidas,$jugador){
     echo"******************************************************************" . " \n";
 }
 
+/* ****COMPLETAR***** */
 
+/**************************************/
+/*********** PROGRAMA PRINCIPAL *******/
+/**************************************/
+
+//Declaración de variables:
+
+
+//Proceso:
+echo "Ingrese nombre de usuario: ";
+$nombreUsuario = trim(fgets(STDIN));
+$bienVenida = escribirMensajeBienvenida($nombreUsuario);
 
 do {
 
