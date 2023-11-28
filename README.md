@@ -40,4 +40,19 @@ El juego Wordix es una emocionante aventura de adivinanzas de palabras. Pon a pr
 - ¡Hazte un té, enciende tu vela favorita y sumérgete en el desafío de Wordix!
 - ¿Necesitas un descanso? ¡Prueba a adivinar palabras con tus amigos y compite por la puntuación más alta!
 
+## Recursos Adicionales
+
+- [Anotaciones y Análisis de Funciones (Drive)](https://docs.google.com/document/d/1CvQov9YtAX7G3RCB0C93zgJALsV5AZCojuvJc7klvUQ/edit?usp=sharing)
+- [Organización del Proyecto (Tablero de Trello )](https://trello.com/b/i0fTkL7F/tp-final-wordix)
+
+## Elenco Estelar 🌟
+
+¡Descubre a las increíbles mentes maestras detrás de Wordix!
+
+- [**Jose Jan (GitHub)**](https://github.com/JoseJan21): El Alquimista de las Palabras, convirtiendo diccionarios en brillantes líneas de código alquímico.
+  
+- [**Ariadna Merino (GitHub)**](https://github.com/arimerino): La Hechicera de los Caracteres, conjurando encantamientos de texto que dan vida a Wordix.
+  
+- [**Alessio Fabersani (GitHub)**](https://github.com/doc146XD): El Maestro de las Transformaciones, convirtiendo simples secuencias de código en obras maestras interactivas.
+
 ¡Que empiece la aventura de Wordix! 🚀
