@@ -44,7 +44,7 @@ $coleccionPalabras = cargarColeccionPalabras();
 function cargarPartidas( )
 {  
     $coleccionPartidas=[];
-    $coleccionPartidas[0]=["palabraWordix"=>"vacas", "jugador"=>"mari", "intentos"=> 6 , "puntaje"=> 0 ];
+    $coleccionPartidas[0]=["palabraWordix"=>"vacas", "jugador"=>"mari", "intentos"=> 0 , "puntaje"=> 0 ];
     $coleccionPartidas[1]=["palabraWordix"=>"mujer", "jugador"=>"marian", "intentos"=> 4 , "puntaje"=> 12 ];
     $coleccionPartidas[2]=["palabraWordix"=>"gatos", "jugador"=>"maria", "intentos"=> 5 , "puntaje"=> 12 ];
     $coleccionPartidas[3]=["palabraWordix"=>"gotas", "jugador"=>"jose", "intentos"=> 2 , "puntaje"=> 15 ];
@@ -56,7 +56,7 @@ function cargarPartidas( )
     $coleccionPartidas[9]=["palabraWordix"=>"piano", "jugador"=>"nisman", "intentos"=> 2 , "puntaje"=> 14 ];
     $coleccionPartidas[10]=["palabraWordix"=>"pisos", "jugador"=>"nisman", "intentos"=> 4 , "puntaje"=> 14 ];
     $coleccionPartidas[11]=["palabraWordix"=>"verde", "jugador"=>"marti", "intentos"=> 3 , "puntaje"=> 14 ];
-    $coleccionPartidas[12]=["palabraWordix"=>"vacas", "jugador"=>"nisman", "intentos"=> 6 , "puntaje"=> 0 ];
+    $coleccionPartidas[12]=["palabraWordix"=>"vacas", "jugador"=>"nisman", "intentos"=> 0 , "puntaje"=> 0 ];
     return($coleccionPartidas);
 }
 //Inicialización de arreglo $coleccionPartidas:
@@ -442,7 +442,7 @@ do {
         case 3: 
             //Ingresando el numero de partida se guarda y se utiliza la funcion 6 de la linea 103
             echo "Ingrese un numero de partida: ";
-            $nroSeleccionado = trim(fgets(STDIN));
+            $nroSeleccionado= solicitarNumeroEntre(0, count($coleccionPartidas)-1);
             estaditicasJugador($coleccionPartidas, $nroSeleccionado);
             break;
         case 4:
