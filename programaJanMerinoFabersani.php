@@ -275,7 +275,9 @@ function palabraDisponible($palabra, $nombreUsuario, $coleccionPartidas){
  */
 function palabraAleatoria($nombreUsuario, $coleccionPalabras, $coleccionPartidas) {
     do {
-        $indicePalabra = array_rand($coleccionPalabras);//array_rand es una funcion predefinida de php que elige aleatoriamente un indice de la array
+        $indicePalabra = array_rand($coleccionPalabras);
+        //array_rand es una funcion predefinida de php que elige aleatoriamente un indice de la array
+
         $palabra = $coleccionPalabras[$indicePalabra];
         $palabraDisponible = palabraDisponible($palabra, $nombreUsuario, $coleccionPartidas);
     } while (!$palabraDisponible);
@@ -292,28 +294,40 @@ function palabraAleatoria($nombreUsuario, $coleccionPalabras, $coleccionPartidas
  * @param int|null $numeroPalabra
  * @return array
  */
-function jugarPartida($nombreUsuario, $coleccionPalabras, $coleccionPartidas, $numeroPalabra = null) { //El parametro ($numeroPalabra) puede ser nulo o puede ser un entero.
-
+function jugarPartida($nombreUsuario, $coleccionPalabras, $coleccionPartidas, $numeroPalabra = null) { 
+    //El parametro ($numeroPalabra) puede ser nulo o puede ser un entero.
+    
     if ($numeroPalabra === null) {
         $palabra = palabraAleatoria($nombreUsuario, $coleccionPalabras, $coleccionPartidas);
     } else {
         // $numeroPalabra = $numeroPalabra;
         $cantPalabras = count($coleccionPalabras);
         if ($numeroPalabra < 0 || $numeroPalabra > $cantPalabras) {
-            echo "Número de palabra no válido. Debe estar entre 0 y " . ($cantPalabras -1) ."\n";
-            return;
+            $partida = "Número de palabra no válido. Debe estar entre 0 y " . ($cantPalabras -1) ."\n";
         }
 
         $palabra = $coleccionPalabras[$numeroPalabra];
-        if (!palabraDisponible($palabra, $nombreUsuario, $coleccionPartidas)) {
-            echo "La palabra ya fue utilizada por el jugador. Elige otro número de palabra.";
-            return;
+    }
+
+    if (!palabraDisponible($palabra, $nombreUsuario, $coleccionPartidas)) {
+        $partida = "La palabra ya fue utilizada por el jugador. Elige otro número de palabra. \n";
+    }else{
+        $partida = jugarWordix($palabra, $nombreUsuario);
+    }
+
+    $palabrasDisponibles = [];
+
+    foreach ($coleccionPalabras as $palabra) {
+        if (palabraDisponible($palabra, $nombreUsuario, $coleccionPartidas)) {
+            $palabrasDisponibles[] = $palabra;
         }
     }
 
-    $partida = jugarWordix($palabra, $nombreUsuario);
+    if (empty($palabrasDisponibles)) { //Determina si una variable es considerada vacía.
+        // Una variable se considera vacía si no existe o si su valor es igual a false. empty() no genera una advertencia si la variable no existe.
+        $partida = "El jugador no tiene más palabras disponibles para jugar.\n";
+    }
 
-    echo "\nPartida finalizada. Datos guardados.\n";
     return $partida;
 }
 
@@ -340,7 +354,7 @@ function estadisticasDeJugador ($coleccionPartidas,$jugador){
 
         if($partida["jugador"] == $jugador){
 
-            $nombreJugador= $jugador;
+            $nombreJugador = $jugador;
             $partidasTotales = $partidasTotales + 1;
             $puntajesTotales = $puntajesTotales + $partida["puntaje"];
             if($partida["puntaje"] > 0){ 
@@ -368,34 +382,36 @@ function estadisticasDeJugador ($coleccionPartidas,$jugador){
                 $intento6 += 1;
             }    
         }
-        
-       
     }
+
     if ($partidasTotales > 0) {
         $porcentajeVictorias = ($victoriasTotales / $partidasTotales) * 100;
-    
     } else {
         $porcentajeVictorias = 0;
     }
-    echo"******************************************************************" . " \n";
-    echo "Nombre: " . $nombreJugador . " \n";
-    echo "Partida: " . $partidasTotales . " \n";
-    echo "Puntaje: " . $puntajesTotales . " \n";
-    echo "Victorias: " . $victoriasTotales . " \n";
-    echo "El prosentaje de victorias: ". $porcentajeVictorias ."% \n";
-   
-    echo "Adivinadas" . " \n";
 
-    echo "intentos1: ". $intento1 . " \n";
-    echo "intentos2: ". $intento2 . " \n";
-    echo "intentos3: ". $intento3 . " \n";
-    echo "intentos4: ". $intento4 . " \n";
-    echo "intentos5: ". $intento5 . " \n";
-    echo "intentos6: ". $intento6 . " \n";
+    if($partidasTotales == 0) {
+        echo "El nombre de usuario ingresado no tiene registro de partidas.";
+    }else{
+        echo"******************************************************************" . " \n";
+        echo "Nombre: " . $nombreJugador . " \n";
+        echo "Partida: " . $partidasTotales . " \n";
+        echo "Puntaje: " . $puntajesTotales . " \n";
+        echo "Victorias: " . $victoriasTotales . " \n";
+        echo "El prosentaje de victorias: ". $porcentajeVictorias ."% \n";
+    
+        echo "Adivinadas" . " \n";
 
-    echo"******************************************************************" . " \n";
+        echo "intentos1: ". $intento1 . " \n";
+        echo "intentos2: ". $intento2 . " \n";
+        echo "intentos3: ". $intento3 . " \n";
+        echo "intentos4: ". $intento4 . " \n";
+        echo "intentos5: ". $intento5 . " \n";
+        echo "intentos6: ". $intento6 . " \n";
+
+        echo"******************************************************************" . " \n";
+    }
 }
-
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
@@ -424,15 +440,22 @@ do {
             echo "Ingrese nombre de usuario con el que desea jugar: ";
             $nombreUsuario = trim(fgets(STDIN));
             $nombreUsuario = strtolower($nombreUsuario);
-
+            
             echo "Ingrese el número de palabra que desea jugar: ";
             $numMax = count($coleccionPalabras) - 1;
             $numeroPalabra = solicitarNumeroEntre(0, $numMax);
+        
 
             $partida = jugarPartida($nombreUsuario, $coleccionPalabras, $coleccionPartidas, $numeroPalabra);
-            array_push($coleccionPartidas, $partida);
-            print_r($coleccionPartidas); //prueba provicional para ver el grabado de juego
 
+            if(is_string($partida)){
+                echo $partida;
+            }else{
+                array_push($coleccionPartidas, $partida);
+            }
+
+            print_r($coleccionPartidas); //prueba provicional para ver el grabado de juego
+            
             break;
         case 2: 
             // Caso 2: Jugar con palabra aleatoria
@@ -442,7 +465,12 @@ do {
             $nombreUsuario = trim(fgets(STDIN));
             $nombreUsuario = strtolower($nombreUsuario);
             $partida = jugarPartida($nombreUsuario, $coleccionPalabras, $coleccionPartidas);
-            array_push($coleccionPartidas, $partida);
+           
+            if(is_string($partida)){
+                echo $partida;
+            }else{
+                array_push($coleccionPartidas, $partida);
+            }
             print_r($coleccionPartidas); //prueba provicional para ver el grabado de juego
 
             break;
