@@ -396,6 +396,28 @@ function estadisticasDeJugador ($coleccionPartidas,$jugador){
     echo"******************************************************************" . " \n";
 }
 
+//FUNCION 16(EXTRA)
+/**
+ * Se utiliza para verificar si la palabra ingresada por 
+ * el jugador no esta en la coleccion de palabras de juego
+ * @param string $palabraNueva
+ * @param array $coleccionPartidas
+ * @return boolean
+ */
+function palabraExistente($palabraNueva, $coleccionPalabras){
+    $iMax= count($coleccionPalabras);
+    $i= 0;
+    $palabraDisponible=true;
+    while($i<$iMax&&$palabraDisponible){
+        $palabra=strtoupper($coleccionPalabras[$i]);
+        if($palabra==$palabraNueva){
+            $palabraDisponible= false;
+        } 
+        $i++;
+    }
+    return $palabraDisponible;
+}
+
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
@@ -404,7 +426,7 @@ function estadisticasDeJugador ($coleccionPartidas,$jugador){
 y en wordix.php a traves de la funcion predefinida switch*/
 
 //Declaración de variables:
-/*String $nombreUsuario, $bienVenida, $nuevaPalabra,
+/*String $nombreUsuario, $bienVenida, $nuevaPalabra, $palabraNueva,
 Int $opcion, $numMax, $numeroPalabra, $nroSeleccionado, 
 array $partida, $resumenDelJugador, $primeraPartidaDelJugador, $coleccionPartidas, $estadistica
 */
@@ -470,6 +492,12 @@ do {
         case 7: 
             // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 7
             $nuevaPalabra = leerPalabra5Letras();
+            $palabraNueva = palabraExistente($nuevaPalabra, $coleccionPalabras);
+            while(!$palabraNueva){
+                echo "Palabra ya ingresada anteriormente.\n";
+                $nuevaPalabra = leerPalabra5Letras();
+                $palabraNueva = palabraExistente($nuevaPalabra, $coleccionPalabras); 
+            }
             array_push($coleccionPalabras, $nuevaPalabra);
             print_r($coleccionPalabras);
             break;
