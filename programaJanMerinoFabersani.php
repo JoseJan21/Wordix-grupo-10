@@ -376,7 +376,10 @@ function estadisticasDeJugador ($coleccionPartidas,$jugador){
     
     } else {
         $porcentajeVictorias = 0;
-    }
+    }if ($victoriasTotales == 0){
+
+        echo"no se tiene registros de partidas de este jugador";
+    }else{
     echo"******************************************************************" . " \n";
     echo "Nombre: " . $nombreJugador . " \n";
     echo "Partida: " . $partidasTotales . " \n";
@@ -394,6 +397,7 @@ function estadisticasDeJugador ($coleccionPartidas,$jugador){
     echo "intentos6: ". $intento6 . " \n";
 
     echo"******************************************************************" . " \n";
+    }
 }
 
 //FUNCION 16(EXTRA)
