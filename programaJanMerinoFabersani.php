@@ -289,10 +289,12 @@ function palabraAleatoria($nombreUsuario, $coleccionPalabras, $coleccionPartidas
  * Función principal que maneja el caso 1 y 2, 
  * Determina mediante el parametro $numeroPalabra si la palabra es aleatoria o seleccionada por indice
  * dependiendo si la variable $numeroPalabra recibe un valor o es nulo, ademas en caso de tener un valor 
- * verifica si la palabra esta disponible para el usuario, finalmente se llama la funcion jugarWordix.
+ * verifica si la palabra esta disponible para el usuario, se llama la funcion jugarWordix y finalmente 
+ * se inicializa una array que guarda las palabras disponibles para el jugador, si ninguna palabra se guarda
+ * retorna un string.
  * @param string $nombreUsuario
  * @param int|null $numeroPalabra
- * @return array
+ * @return array|string 
  */
 function jugarPartida($nombreUsuario, $coleccionPalabras, $coleccionPartidas, $numeroPalabra = null) { 
     //El parametro ($numeroPalabra) puede ser nulo o puede ser un entero.
@@ -324,7 +326,8 @@ function jugarPartida($nombreUsuario, $coleccionPalabras, $coleccionPartidas, $n
     }
 
     if (empty($palabrasDisponibles)) { //Determina si una variable es considerada vacía.
-        // Una variable se considera vacía si no existe o si su valor es igual a false. empty() no genera una advertencia si la variable no existe.
+        // Una variable se considera vacía si no existe o si su valor es igual a false. 
+        //empty() no genera una advertencia si la variable no existe.
         $partida = "El jugador no tiene más palabras disponibles para jugar.\n";
     }
 
@@ -434,8 +437,6 @@ do {
     switch ($opcion) {
         case 1: 
             // Caso 1: Jugar con número de palabra específico mediante indice
-            // str $nombreUsuario int $numMax, $numeroPalabra array $partida
-
             echo "Ingrese nombre de usuario con el que desea jugar: ";
             $nombreUsuario = trim(fgets(STDIN));
             $nombreUsuario = strtolower($nombreUsuario);
@@ -444,7 +445,6 @@ do {
             $numMax = count($coleccionPalabras) - 1;
             $numeroPalabra = solicitarNumeroEntre(0, $numMax);
         
-
             $partida = jugarPartida($nombreUsuario, $coleccionPalabras, $coleccionPartidas, $numeroPalabra);
 
             if(is_string($partida)){
@@ -454,11 +454,9 @@ do {
             }
 
             print_r($coleccionPartidas); //prueba provicional para ver el grabado de juego
-            
             break;
         case 2: 
             // Caso 2: Jugar con palabra aleatoria
-            // str $nombreUsuario array $partida
             $nombreUsuario = solicitarJugador();
             $partida = jugarPartida($nombreUsuario, $coleccionPalabras, $coleccionPartidas);
            
@@ -468,7 +466,6 @@ do {
                 array_push($coleccionPartidas, $partida);
             }
             print_r($coleccionPartidas); //prueba provicional para ver el grabado de juego
-
             break;
         case 3: 
             //Ingresando el numero de partida se guarda y se utiliza la funcion 6 de la linea 103
@@ -477,29 +474,26 @@ do {
             estaditicasJugador($coleccionPartidas, $nroSeleccionado);
             break;
         case 4:
-            //Caso 5 muestra las estaditicas del nombre que escribio el jugador 
-            //string $nombreUsuario int $primeraPartidaDelJugador
+            //Caso 5 muestra las estaditicas del nombre que escribio el jugador
             $nombreUsuario = solicitarJugador(); 
             $primeraPartidaDelJugador = primerPartidaGanada($coleccionPartidas, $nombreUsuario); 
-            //llama a la fincion primerPartidaGanada que le devuelve el indice de la primer partida ganada de ese jugador
+            //llama a la funcion 8 primerPartidaGanada (152) que le devuelve el indice de la primer partida ganada de ese jugador
 
             estaditicasJugador($coleccionPartidas, $primeraPartidaDelJugador, $nombreUsuario);
-    
             break;
         case 5: 
             // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 5
             $nombreUsuario = solicitarJugador(); 
             //se guarda la informacion del nombre del jugador
             $estadistica = estadisticasDeJugador($coleccionPartidas, $nombreUsuario); 
-            //llama al funcion estadisticasDeJugador que ordenan las partidas por el nombre del jugador y por la palabra
-
+            //llama al funcion 15 estadisticasDeJugador (343) que ordenan las partidas por el nombre del jugador y por la palabra
             break;
         case 6: 
             //Se muestran las partidas ordenadas utilizando la funcion 11 de la linea 102
             partidasOrdenadas($coleccionPartidas);
             break;
         case 7: 
-            // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 7
+            // Recibe una palabra de 5 letras, verifica que si ya no esta en la coleccion y finalmente la sube
             $nuevaPalabra = leerPalabra5Letras();
             $palabraNueva = palabraExistente($nuevaPalabra, $coleccionPalabras);
             while(!$palabraNueva){
@@ -512,9 +506,6 @@ do {
             break;
         case 8: 
             // Salir del bucle
-            break;
-        default:
-            echo "Opción no válida \n";
             break;
     }
 } while ($opcion != 8);
