@@ -410,8 +410,7 @@ array $partida, $resumenDelJugador, $primeraPartidaDelJugador, $coleccionPartida
 */
 
 //Proceso:
-echo "Ingrese nombre de usuario: ";
-$nombreUsuario = trim(fgets(STDIN));
+$nombreUsuario = solicitarJugador();
 $bienVenida = escribirMensajeBienvenida($nombreUsuario);
 
 do {
@@ -420,10 +419,7 @@ do {
         case 1: 
             // Caso 1: Jugar con número de palabra específico mediante indice
             // str $nombreUsuario int $numMax, $numeroPalabra array $partida
-
-            echo "Ingrese nombre de usuario con el que desea jugar: ";
-            $nombreUsuario = trim(fgets(STDIN));
-            $nombreUsuario = strtolower($nombreUsuario);
+            $nombreUsuario = solicitarJugador();
 
             echo "Ingrese el número de palabra que desea jugar: ";
             $numMax = count($coleccionPalabras) - 1;
@@ -437,10 +433,7 @@ do {
         case 2: 
             // Caso 2: Jugar con palabra aleatoria
             // str $nombreUsuario array $partida
-
-            echo "Ingrese nombre de usuario con el que desea jugar: ";
-            $nombreUsuario = trim(fgets(STDIN));
-            $nombreUsuario = strtolower($nombreUsuario);
+            $nombreUsuario = solicitarJugador();
             $partida = jugarPartida($nombreUsuario, $coleccionPalabras, $coleccionPartidas);
             array_push($coleccionPartidas, $partida);
             print_r($coleccionPartidas); //prueba provicional para ver el grabado de juego
@@ -454,22 +447,19 @@ do {
             break;
         case 4:
             //Caso 5 muestra las estaditicas del nombre que escribio el jugador 
-            //string $nombreDelJugador int $primeraPartidaDelJugador
-            echo "ingrese el nombre del jugador: ";
-            $nombreDelJugador = trim(fgets(STDIN)); 
-            $primeraPartidaDelJugador = primerPartidaGanada($coleccionPartidas, $nombreDelJugador); 
+            //string $nombreUsuario int $primeraPartidaDelJugador
+            $nombreUsuario = solicitarJugador(); 
+            $primeraPartidaDelJugador = primerPartidaGanada($coleccionPartidas, $nombreUsuario); 
             //llama a la fincion primerPartidaGanada que le devuelve el indice de la primer partida ganada de ese jugador
 
-            estaditicasJugador($coleccionPartidas, $primeraPartidaDelJugador, $nombreDelJugador);
+            estaditicasJugador($coleccionPartidas, $primeraPartidaDelJugador, $nombreUsuario);
     
             break;
         case 5: 
             // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 5
-            echo "\n";
-            echo "ingrese el nombre del jugador: ";
-            $nombreDelJugador = trim(fgets(STDIN)); 
+            $nombreUsuario = solicitarJugador(); 
             //se guarda la informacion del nombre del jugador
-            $estadistica = estadisticasDeJugador($coleccionPartidas, $nombreDelJugador); 
+            $estadistica = estadisticasDeJugador($coleccionPartidas, $nombreUsuario); 
             //llama al funcion estadisticasDeJugador que ordenan las partidas por el nombre del jugador y por la palabra
 
             break;
