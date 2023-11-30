@@ -32,8 +32,7 @@ function cargarColeccionPalabras()
 
     return ($coleccionPalabras);
 }
-//Inicialización de arreglo $coleccionPalabras:
-$coleccionPalabras = cargarColeccionPalabras();
+
 
 //FUNCION 2
 
@@ -75,8 +74,7 @@ function cargarPartidas( )
     array_push($coleccion, $pa1, $pa2, $pa3, $pa4, $pa5, $pa6, $pa7, $pa8, $pa9, $pa10, $pa11, $pa12);
     return $coleccion;
 }
-//Inicialización de arreglo $coleccionPartidas:
-$coleccionPartidas = cargarPartidas();
+
 
 //FUNCION 3
 /**
@@ -236,15 +234,24 @@ function solicitarJugador(){
 
 //FUNCION COMPLEMENTARIA A LA 11
 /**
- * Esta funcion es similar a la cmp descripta en el pdf sobre arreglos 
+ * Definicion de la función de comparación, esta funcion es similar a la cmp descripta en el pdf sobre arreglos 
  * donde se utiliza la funcion predefinida uasort.
  * @param string $a
  * @param string $b
  * @return 
  */
-function compararPorNombreJugador($a, $b) {
-    return strcmp($a["jugador"], $b["jugador"]);
+function compararPorNombreYPalabra($partidaA, $partidaB) {
+    // Comparar por el nombre del jugador
+    $resultado = strcmp($partidaA["jugador"], $partidaB["jugador"]);
+
+    // Si los nombres son iguales, comparar por la palabraWordix
+    if ($resultado == 0) {
+        $resultado = strcmp($partidaA["palabraWordix"], $partidaB["palabraWordix"]);
+    }
+
+    return $resultado;
 }
+
 
 //FUNCION 11
 /**
@@ -252,9 +259,11 @@ function compararPorNombreJugador($a, $b) {
  *@param array $coleccionPartidas
  */
 function partidasOrdenadas($coleccionPartidas){
-    uasort($coleccionPartidas, 'compararPorNombreJugador');
+    // Utilizar uasort para ordenar el array directamente
+    uasort($coleccionPartidas, 'compararPorNombreYPalabra');
     print_r($coleccionPartidas);
 }
+
 
 //FUNCION 12(EXTRA)
 /**
@@ -359,6 +368,7 @@ function jugarPartida($nombreUsuario, $coleccionPalabras, $coleccionPartidas, $n
 function estadisticasDeJugador ($coleccionPartidas,$jugador){
 // int $victoriasTotales, $partidasTotales, $puntajesTotales, $intento1, $intento2, $intento3, $intento14, $intento5, $intento6
 //array $coleccionPartidas
+    $datosJugador = [];
     $victoriasTotales = 0;
     $partidasTotales = 0;
     $puntajesTotales = 0;
@@ -431,6 +441,29 @@ function estadisticasDeJugador ($coleccionPartidas,$jugador){
         echo"******************************************************************" . " \n";
     }
 }
+
+//FUNCION 16(EXTRA)
+/**
+ * Se utiliza para verificar si la palabra ingresada por 
+ * el jugador no esta en la coleccion de palabras de juego
+ * @param string $palabraNueva
+ * @param array $coleccionPartidas
+ * @return boolean
+ */
+function palabraExistente($palabraNueva, $coleccionPalabras){
+    $iMax= count($coleccionPalabras);
+    $i= 0;
+    $palabraDisponible=true;
+    while($i<$iMax&&$palabraDisponible){
+        $palabra=strtoupper($coleccionPalabras[$i]);
+        if($palabra==$palabraNueva){
+            $palabraDisponible= false;
+        } 
+        $i++;
+    }
+    return $palabraDisponible;
+}
+
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
@@ -443,6 +476,10 @@ y en wordix.php a traves de la funcion predefinida switch*/
 Int $opcion, $numMax, $numeroPalabra, $nroSeleccionado, 
 array $partida, $resumenDelJugador, $primeraPartidaDelJugador, $coleccionPartidas, $estadistica
 */
+
+//Inicialización de arreglo $coleccionPartidas:
+$coleccionPartidas = cargarPartidas();
+$coleccionPalabras = cargarColeccionPalabras();
 
 //Proceso:
 $nombreUsuario = solicitarJugador();
@@ -469,7 +506,7 @@ do {
                 array_push($coleccionPartidas, $partida);
             }
 
-            print_r($coleccionPartidas); //prueba provicional para ver el grabado de juego
+            // print_r($coleccionPartidas); //prueba provicional para ver el grabado de juego
             break;
         case 2: 
             // Caso 2: Jugar con palabra aleatoria
@@ -481,7 +518,7 @@ do {
             }else{
                 array_push($coleccionPartidas, $partida);
             }
-            print_r($coleccionPartidas); //prueba provicional para ver el grabado de juego
+            // print_r($coleccionPartidas); //prueba provicional para ver el grabado de juego
             break;
         case 3: 
             //Ingresando el numero de partida se guarda y se utiliza la funcion 6 de la linea 103
@@ -489,7 +526,7 @@ do {
             $nroSeleccionado= solicitarNumeroEntre(0, count($coleccionPartidas)-1);
             estaditicasJugador($coleccionPartidas, $nroSeleccionado);
             break;
-        case 4:
+        case 4://tiene que controlar si el jugador existe como en la funcion 5
             //Caso 5 muestra las estaditicas del nombre que escribio el jugador
             $nombreUsuario = solicitarJugador(); 
             $primeraPartidaDelJugador = primerPartidaGanada($coleccionPartidas, $nombreUsuario); 
@@ -497,7 +534,7 @@ do {
 
             estaditicasJugador($coleccionPartidas, $primeraPartidaDelJugador, $nombreUsuario);
             break;
-        case 5: 
+        case 5: // tenemos que retornar el arreglo asociativo con todos los datos
             // Completar qué secuencia de pasos ejecutar si el usuario elige la opción 5
             $nombreUsuario = solicitarJugador(); 
             //se guarda la informacion del nombre del jugador
@@ -518,7 +555,7 @@ do {
                 $palabraNueva = palabraExistente($nuevaPalabra, $coleccionPalabras); 
             }
             array_push($coleccionPalabras, $nuevaPalabra);
-            print_r($coleccionPalabras);
+            // print_r($coleccionPalabras);
             break;
         case 8: 
             // Salir del bucle
