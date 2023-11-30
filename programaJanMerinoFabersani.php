@@ -134,9 +134,11 @@ function seleccionarOpcion(){
         //   echo "la infomacion ". $infomacionDeLaPartida. "\n"; 
         //   echo "esto:".$primeraPartidaDelJugador;
 
-    }else{
+    }elseif($numeroPartida==-1){
+        echo "Este usuario no tiene partidas registradas";
+    }elseif($numeroPartida==-2){
         echo"el jugador ". $nombreDelJugador." no gano ninguna partida \n";
-    }   
+    } 
 }
 
 //FUNCION 7
@@ -164,25 +166,30 @@ function agregarPalabra($coleccionPalabras, $palabra){
  * @return int
  */
 function primerPartidaGanada($coleccionPartidas, $jugador){
-    
+    $coleccionPartidas= cargarPartidas();
     $indice = -1;
     $clave = 0;
     $cantPartidas = count($coleccionPartidas);
     // Mientras haya partidas por revisar y no hayamos encontrado una partida ganada.
-    while ($clave < $cantPartidas && $indice == -1) {
+    while ($clave < $cantPartidas && ($indice == -1 || $indice == -2)) {
         // $índice == -1: Verifica si el índice ($índice) sigue siendo -1. 
         //Si se actualiza a un valor diferente de -1, significa que se ha encontrado una partida ganada y el bucle debe detenerse.
         $partida = $coleccionPartidas[$clave];
+        $stop= true;
 
         // Asegura si el jugador de la partida es el jugador que estamos buscando
         // y si el puntaje de la partida es mayor que cero (lo que indica que la partida fue ganada).
         if ($partida['jugador'] == $jugador && $partida['puntaje'] > 0) {
             $indice = $clave; // Actualizamos el índice con el valor actual.
+            $stop= false;
+        }elseif (($partida['jugador'] == $jugador && $partida['puntaje'] == 0) && $stop){
+            $indice= -2;
+        } else {
+            $indice= -1;
         }
         // Incrementamos la clave para pasar a la siguiente partida.
         $clave++;
     }
-
     return $indice;
 }
 
@@ -420,23 +427,24 @@ function estadisticasDeJugador ($coleccionPartidas,$jugador){
     }
 
     if($partidasTotales == 0) {
-        echo "El nombre de usuario ingresado no tiene registro de partidas.";
+        echo "El nombre de usuario ingresado no tiene registro de partidas.\n";
     }else{
+        $datosJugador= [ "jugador" => $nombreJugador, "partida" => $partidasTotales, "puntaje" => $puntajesTotales, "victorias" => $victoriasTotales, "intento1" => $intento1, "intento2" => $intento2, "intento3" => $intento3, "intento4" => $intento4, "intento5" => $intento5, "intento6" => $intento6 ]; 
         echo"******************************************************************" . " \n";
-        echo "Nombre: " . $nombreJugador . " \n";
-        echo "Partida: " . $partidasTotales . " \n";
-        echo "Puntaje: " . $puntajesTotales . " \n";
-        echo "Victorias: " . $victoriasTotales . " \n";
-        echo "El prosentaje de victorias: ". $porcentajeVictorias ."% \n";
+        echo "Nombre: " . $datosJugador["jugador"] . " \n";
+        echo "Partida: " . $datosJugador["partida"] . " \n";
+        echo "Puntaje: " . $datosJugador["puntaje"] . " \n";
+        echo "Victorias: " . $datosJugador["victorias"] . " \n";
+        echo "El porcentaje de victorias: ". $porcentajeVictorias ."% \n";
     
         echo "Adivinadas" . " \n";
 
-        echo "intentos1: ". $intento1 . " \n";
-        echo "intentos2: ". $intento2 . " \n";
-        echo "intentos3: ". $intento3 . " \n";
-        echo "intentos4: ". $intento4 . " \n";
-        echo "intentos5: ". $intento5 . " \n";
-        echo "intentos6: ". $intento6 . " \n";
+        echo "intentos1: ". $datosJugador["intento1"] . " \n";
+        echo "intentos2: ". $datosJugador["intento2"] . " \n";
+        echo "intentos3: ". $datosJugador["intento3"] . " \n";
+        echo "intentos4: ". $datosJugador["intento4"] . " \n";
+        echo "intentos5: ". $datosJugador["intento5"] . " \n";
+        echo "intentos6: ". $datosJugador["intento6"] . " \n";
 
         echo"******************************************************************" . " \n";
     }
